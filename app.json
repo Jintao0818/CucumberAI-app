@@ -1,0 +1,51 @@
+{
+  "expo": {
+    "name": "CucumberAI",
+    "slug": "CucumberAI-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/LOGO.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/LOGO.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow CucumnerAI to accesses your photos.",
+          "cameraPermission": "Allow CucumnerAI to accesses your camera."
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow CucumnerAI to access your photos.",
+          "savePhotosPermission": "Allow CucumnerAI to save photos.",
+          "isAccessMediaLocationEnabled": true
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
