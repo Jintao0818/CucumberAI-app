@@ -51,6 +51,7 @@ export default function result() {
         refreshing={false}
         progressViewOffset={100}
       />
+      <View style={{ height: 150 }}></View>
     </SafeAreaView>
   );
 }
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 32,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
   },
   title: {
     fontSize: 24,

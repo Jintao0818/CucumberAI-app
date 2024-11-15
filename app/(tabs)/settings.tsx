@@ -4,8 +4,12 @@ import { Avatar, Card, Icon, ListItem } from '@rneui/themed';
 import { useEffect, useState } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import type { CheckListItem } from '@/models';
-import { useAppDispatch } from '@/store';
-import { setCharacterValue } from '@/store/modules/settings';
+import { useAppDispatch, useAppSelector } from '@/store';
+import {
+  setCharacterValue,
+  setModeValue,
+  setLength,
+} from '@/store/modules/settings';
 import {
   KeyboardAvoidingView,
   TextInput,
@@ -16,6 +20,9 @@ import {
 } from 'react-native';
 
 export default function Settings() {
+  const { modeValue, characterValue } = useAppSelector(
+    (state) => state.settings
+  );
   const dispatch = useAppDispatch();
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
   const [list, setList] = useState<CheckListItem[]>([]);
@@ -70,20 +77,28 @@ export default function Settings() {
     setSelectedButtonIndex(index);
     setList(index === 0 ? fruitList : pulpList);
     dispatch(setCharacterValue([]));
+    dispatch(setModeValue(index === 0 ? 'fruit' : 'pulp'));
   };
 
   const onChecked = (key: string) => {
+    let metrics: string[] = [];
     setList((list) => {
+      list.map((item) => {
+        if (item.key === key || item.checked) {
+          metrics.push(item.key);
+        }
+      });
       return list.map((item) => {
         return item.key === key ? { ...item, checked: !item.checked } : item;
       });
     });
 
-    let metrics: string[] = [];
-    list.map((item) => {
-      item.checked ? metrics.push(item.key) : null;
-    });
     dispatch(setCharacterValue(metrics));
+  };
+
+  const onReset = () => {
+    setList(selectedButtonIndex === 0 ? fruitList : pulpList);
+    dispatch(setCharacterValue([]));
   };
 
   return (
@@ -92,15 +107,8 @@ export default function Settings() {
       style={styles.container}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        {/* <View style={styles.inner}>
-          <Text style={styles.header}>Header</Text>
-          <TextInput placeholder="Username" style={styles.textInput} />
-          <View style={styles.btnContainer}>
-            <Button title="Submit" onPress={() => null} />
-          </View>
-        </View> */}
         <View>
-          <MyTitle title="特征选择" buttonTitle="reset" />
+          <MyTitle title="特征选择" buttonTitle="reset" onPress={onReset} />
           <Card containerStyle={styles.card}>
             <ListItem bottomDivider>
               <ListItem.Content>
@@ -115,7 +123,7 @@ export default function Settings() {
             <CheckGruop list={list} onPress={onChecked} />
           </Card>
 
-          <MyTitle title="参照物" />
+          {/* <MyTitle title="参照物" />
           <Card containerStyle={styles.card}>
             <ListItem>
               <ListItem.Input
@@ -127,7 +135,7 @@ export default function Settings() {
                 }}
               />
             </ListItem>
-          </Card>
+          </Card> */}
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

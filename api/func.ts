@@ -8,8 +8,8 @@ type CheckboxValueType = string | number
 // 预测
 interface PredictParams {
   UA: 'pc' | 'mobile'
-  mode: 'fruit' | 'pulp'
-  metrics: CheckboxValueType[]
+  mode: string
+  metrics: string[]
   names: string[]
 }
 

@@ -4,17 +4,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 interface settingsStore {
   modeValue: string,
   characterValue: string[],
-  compressionSize: string,
-  checkAll: boolean,
-  indeterminate: boolean
+  length: number
 }
 
 const initialState: settingsStore = {
-  modeValue: 'pulp',
+  modeValue: 'fruit',
   characterValue: [],
-  compressionSize: '640',
-  checkAll: false,
-  indeterminate: false
+  length: 0
 
 }
 
@@ -28,19 +24,13 @@ const settingsStore = createSlice({
     setCharacterValue(state, action: PayloadAction<string[]>) {
       state.characterValue = action.payload
     },
-    setCompressionSize(state, action: PayloadAction<string>) {
-      state.compressionSize = action.payload
+    setLength(state, action: PayloadAction<number>) {
+      state.length = action.payload
     },
-    setCheckAll(state, action: PayloadAction<boolean>) {
-      state.checkAll = action.payload
-    },
-    setIndeterminate(state, action: PayloadAction<boolean>) {
-      state.indeterminate = action.payload
-    }
   }
 })
 
-export const { setModeValue, setCharacterValue, setCompressionSize, setCheckAll, setIndeterminate } = settingsStore.actions
+export const { setModeValue, setCharacterValue, setLength } = settingsStore.actions
 
 const settingsReducer = settingsStore.reducer
 export default settingsReducer
